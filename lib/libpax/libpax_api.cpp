@@ -198,10 +198,13 @@ int libpax_counter_start() {
 int libpax_counter_stop() {
   wifi_sniffer_stop();
   stop_BLE_scan();
-  xTimerStop(PaxReportTimer, 0);
-  PaxReportTimer = NULL;
+  if (PaxReportTimer != NULL) {
+    xTimerStop(PaxReportTimer, 0);
+    PaxReportTimer = NULL;
+  }
   return 0;
 }
+
 
 int libpax_counter_count(struct count_payload_t* count) {
   fill_counter(count);
